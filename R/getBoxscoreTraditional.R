@@ -14,7 +14,7 @@ getBoxscoreTraditional <- function(game_id) {
 	TeamStats <- as.data.frame(TeamStats)
 	colnames(TeamStats)<- unlist(temp$headers)
 
-	temp <- data[data$name == 'TeamStearterBenchStats',]
+	temp <- data[data$name == 'TeamStarterBenchStats',]
 	TeamStarterBenchStats <- temp$rowSet
 	TeamStarterBenchStats <- as.data.frame(TeamStarterBenchStats)
 	colnames(TeamStarterBenchStats)<- unlist(temp$headers)

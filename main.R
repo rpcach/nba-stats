@@ -1,5 +1,7 @@
+library(jsonlite)
+
 # loads data
-boxscore <- readRDS('data/season/boxscore.rds')
-boxscore_starter_bench <- readRDS('data/season/boxscore-starter-bench.rds')
-boxscore_team <- readRDS('data/season/boxscore-team.rds')
+player <- readRDS('data/season/player.rds')
+starterBench <- readRDS('data/season/starter-bench.rds')
+team <- readRDS('data/season/team.rds')
 

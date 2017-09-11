@@ -26,5 +26,6 @@ getSeasonData <- function(year) {
 			error_count <<- error_count + 1
 		})
 	}
+	
 	return(list(player,team,starterBench))
 }

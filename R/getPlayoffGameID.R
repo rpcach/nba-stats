@@ -1,4 +1,5 @@
-getPlayoffGameID <- function(year) {
+#OLD
+getPlayoffData <- function(year) {
 	year <- substring(year,3,4)
 
 	stats <- NULL
@@ -20,7 +21,7 @@ getPlayoffGameID <- function(year) {
 						print(game_id)
 					},
 					error=function(e) {
-						#Sys.sleep(1)
+						Sys.sleep(1)
 					})
 				}
 			}
@@ -32,7 +33,6 @@ getPlayoffGameID <- function(year) {
 		a_wins <- 0
 		b_wins <- 0
 		while(!is_complete) {
-			i <- as.character(i)
 			game_num <- rep('0', 5-nchar(i))
 			game_id <- paste(c('004',year,game_num,i), collapse='')
 			tryCatch (
@@ -63,7 +63,7 @@ getPlayoffGameID <- function(year) {
 			error=function(e) {
 				Sys.sleep(2)
 			})
-			i <- as.numeric(i) + 1
+			i <- i+1
 		}
 	}
 	return(list(player, team, starterBench))
@@ -73,23 +73,23 @@ getPlayoffGameID <- function(year) {
 # for game_num '00', this gets really tricky.
 # saveRDS(player, file='data/playoffs/player.rds')
 # saveRDS(team, file='data/playoffs/team.rds')
-# saveRDS(starterBench, file='data/playoffs/starterBench.rds')
+# saveRDS(starterBench, file='data/playoffs/starter-bench.rds')
 
 #for(x in unique(player$PLAYER_NAME)) {if(length(unique(player$PLAYER_ID[player$PLAYER_NAME == x])) > 1) {print(x)}}
 
-player <- NULL
-team <- NULL
-starterBench <- NULL
-#for(i in 1995:1986) {
-	abc <- getPlayoffGameID(i)
-	player <- rbind(player, abc[[1]])
-	team <- rbind(team, abc[[2]])
-	starterBench <- rbind(starterBench, abc[[3]])
+# player <- NULL
+# team <- NULL
+# starterBench <- NULL
+# #for(i in 1995:1986) {
+# 	abc <- getPlayoffGameID(i)
+# 	player <- rbind(player, abc[[1]])
+# 	team <- rbind(team, abc[[2]])
+# 	starterBench <- rbind(starterBench, abc[[3]])
 
-	saveRDS(player, 'p2.rds')
-	saveRDS(team, 't2.rds')
-	saveRDS(starterBench, 'sb2.rds')
-	print(i)
+# 	saveRDS(player, 'p2.rds')
+# 	saveRDS(team, 't2.rds')
+# 	saveRDS(starterBench, 'sb2.rds')
+# 	print(i)
 #}
 
 #remove starterBench data for game_id: 0048700079

@@ -1,5 +1,6 @@
-loop <- function(year) {
+getSeasonData <- function(year) {
 	year <- substring(year,3,4)
+
 	error_count <- 0
 	stats <- NULL
 	player<- NULL
@@ -23,8 +24,7 @@ loop <- function(year) {
 		error=function(e) {
 			Sys.sleep(1)
 			error_count <<- error_count + 1
-		}
-		)
+		})
 	}
-	
+	return(list(player,team,starterBench))
 }

@@ -9,6 +9,7 @@ clean <- function(p, t, sb) {
 	t[, c(1,2,7:25)] <- sapply(t[, c(1,2,7:25)], function(x) as.numeric(as.character(x)))
 	sb[, c(1,2,8:25)] <- sapply(sb[, c(1,2,8:25)], function(x) as.numeric(as.character(x)))
 
+	#fixes playing time
 	p_t_sb <- list(p,t,sb)
 	for(i in 1:3) {
 		print(i)
@@ -29,4 +30,9 @@ clean <- function(p, t, sb) {
 	p <- p_t_sb[[1]]
 	t <- p_t_sb[[2]]
 	sb <- p_t_sb[[3]]
+
+	p$is_season <- sapply(p$game_id, function(x) substr(x,3,3))
+	t$is_season <- sapply(t$game_id, function(x) substr(x,3,3))
+	sb$is_season <- sapply(sb$game_id, function(x) substr(x,3,3))
+
 }

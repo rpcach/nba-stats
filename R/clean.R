@@ -24,15 +24,27 @@ clean <- function(p, t, sb) {
 		mins[nchar(mins) == 1] <- paste('0',mins[nchar(mins)==1],sep='')
 		time <- paste(mins,':',secs,sep='')
 
-		df <- cbind(df, time)
+		#df <- cbind(df, time)
+		df <- cbind(df[, 1:9],0,0,df[, 10:ncol(df)])
+		colnames(df)[9:11] <- c('time','min','sec')
+
+		mins <- as.numeric(mins)
+		secs <- as.numeric(secs)
+		df$time <- mins + secs/60
+
+		df$min <- mins
+		df$sec <- secs
+		df <- df[, c(-8,-21,-22,-28,-30)]
+
 		p_t_sb[[i]] <- df
 	}
 	p <- p_t_sb[[1]]
 	t <- p_t_sb[[2]]
 	sb <- p_t_sb[[3]]
 
-	p$is_season <- sapply(p$game_id, function(x) substr(x,3,3))
-	t$is_season <- sapply(t$game_id, function(x) substr(x,3,3))
-	sb$is_season <- sapply(sb$game_id, function(x) substr(x,3,3))
+	# p$is_season <- sapply(p$game_id, function(x) substr(x,3,3))
+	# t$is_season <- sapply(t$game_id, function(x) substr(x,3,3))
+	# sb$is_season <- sapply(sb$game_id, function(x) substr(x,3,3))
 
+	return(list(p, t, sb))
 }

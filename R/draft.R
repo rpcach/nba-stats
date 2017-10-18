@@ -27,18 +27,19 @@ p$min <- mins
 p$sec <- secs
 
 p <- p[, c(-8,-21,-22,-28,-30)]
-p <- p[substr(p$game_id,1,4) %in% c('2160','2150','2140'), ]
+# p <- p[substr(p$game_id,1,3) %in% c('216','215','214'), ]
 p <- p[, c(-2,-5)]
 colnames(p)[3] <- 'pos'
 
-stat <- function(p, name, years) {
-	years <- c('2160','2150','2140')[years]
-	p <- p[p$player_name == name & substr(p$game_id,1,4) %in% years, ]
+get_stats <- function(p, name, year=2016) {
+	year <- paste('2', substr(year,3,4), sep='')
+	p <- p[p$player_name == name & substr(p$game_id,1,3) == year, ]
 
 	stats <- NULL
 
 	stats <- c(stats,
-		mean(p$time, na.rm=TRUE),
+		unique(as.character(p$player_name)),
+		mean(p$time[p$time != 0], na.rm=TRUE),
 		sum(p$fgm, na.rm=TRUE),
 		sum(p$fga, na.rm=TRUE),
 		sum(p$fgm, na.rm=TRUE) / sum(p$fga, na.rm=TRUE),
@@ -54,17 +55,13 @@ stat <- function(p, name, years) {
 		mean(p$blk, na.rm=TRUE),
 		mean(p$to, na.rm=TRUE),
 		mean(p$pts, na.rm=TRUE))
+	stats <- rbind(stats)
+	stats <- as.data.frame(stats, stringsAsFactors=FALSE)
+	for(i in 2:ncol(stats)) { stats[, i] <- as.numeric(stats[, i]) }
 
-	names(stats) <- colnames(p)[8:23]
-	round(stats, digits=2)
-}
-
-stats <- function(p, name) {
-	df <- NULL
-	for(i in 1:3) {
-		df <- rbind(df, stat(p, name, i))
-	}
-	print(df)
+	colnames(stats) <- colnames(p)[c(4,6,9:23)]
+	stats[1, 2:ncol(stats)] <- round(stats[1 , 2:ncol(stats)], digits=2)
+	stats
 }
 
 stats(p, 'Carmelo Anthony')

@@ -1,4 +1,8 @@
-get_stats <- function(p, names, years=2016, mantissa=2, hide_null=TRUE) {
+get_stats <- function(p, names, years='lifetime', mantissa=2, hide_null=TRUE) {
+	if(years == 'lifetime') {
+		years <- as.numeric(paste(20,unique(substr(p$game_id[p$player_name %in% names],2,3)),sep=''))
+		years[years > 2083] <- paste(19, substr(years[years > 2083],3,4),sep='')
+	}
 	p <- p[p$player_name %in% names & substr(p$game_id,2,3) %in% substr(years,3,4), ]
 
 	stats <- matrix(0, ncol=18, nrow=0)

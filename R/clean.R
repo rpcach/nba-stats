@@ -22,7 +22,6 @@ clean <- function(p, t, sb) {
 
 		mins[mins == 'NA'] <- '00'
 		mins[nchar(mins) == 1] <- paste('0',mins[nchar(mins)==1],sep='')
-		time <- paste(mins,':',secs,sep='')
 
 		#df <- cbind(df, time)
 		df <- cbind(df[, 1:9],0,0,df[, 10:ncol(df)])
@@ -30,7 +29,7 @@ clean <- function(p, t, sb) {
 
 		mins <- as.numeric(mins)
 		secs <- as.numeric(secs)
-		df$time <- mins + secs/60
+		df$time <- round(mins + secs/60, digits=2)
 
 		df$min <- mins
 		df$sec <- secs

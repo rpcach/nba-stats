@@ -13,7 +13,7 @@ get_stats <- function(p, names, years='lifetime', mantissa=2, hide_null=TRUE) {
 	}
 	p <- p[p$player_name %in% names & substr(p$game_id,2,3) %in% substr(years,3,4), ]
 
-	stats <- matrix(0, ncol=18, nrow=0)
+	stats <- matrix(0, ncol=19, nrow=0)
 
 	for(i in names) {
 		if(hide_null & !(i %in% p$player_name)) { next }
@@ -28,6 +28,7 @@ get_stats <- function(p, names, years='lifetime', mantissa=2, hide_null=TRUE) {
 			stats <- rbind(stats, c(
 				i,
 				years[j],
+				nrow(p3),
 				mean(p3$time[p3$time != 0]),
 				sum(p3$fgm, na.rm=TRUE),
 				sum(p3$fga, na.rm=TRUE),
@@ -49,8 +50,8 @@ get_stats <- function(p, names, years='lifetime', mantissa=2, hide_null=TRUE) {
 	stats <- as.data.frame(stats, stringsAsFactors=FALSE)
 	for(i in 2:ncol(stats)) { stats[, i] <- as.numeric(stats[, i]) }
 
-	colnames(stats) <- c(colnames(p)[6],'season',colnames(p)[c(8,11:25)])
-	stats[, 2:ncol(stats)] <- round(stats[ , 2:ncol(stats)], digits=mantissa)
+	colnames(stats) <- c(colnames(p)[6],'season','games_played',colnames(p)[c(8,11:25)])
+	stats[, 4:ncol(stats)] <- round(stats[ , 4:ncol(stats)], digits=mantissa)
 
 	return(stats)
 }

@@ -1,7 +1,15 @@
 get_stats <- function(p, names, years='lifetime', mantissa=2, hide_null=TRUE) {
 	if(years == 'lifetime') {
-		years <- as.numeric(paste(20,unique(substr(p$game_id[p$player_name %in% names],2,3)),sep=''))
-		years[years > 2083] <- paste(19, substr(years[years > 2083],3,4),sep='')
+		years <- unique(substr(p$game_id[p$player_name %in% names],2,3))
+
+		for(i in 1:length(years)) {
+			if(years[i] > 83) {
+				years[i] <- paste(19, years[i], sep='')
+			} else {
+				years[i] <- paste(20, years[i], sep='')
+			}
+		}
+		years <- sort(as.numeric(years))
 	}
 	p <- p[p$player_name %in% names & substr(p$game_id,2,3) %in% substr(years,3,4), ]
 

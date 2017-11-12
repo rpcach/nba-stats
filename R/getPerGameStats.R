@@ -25,7 +25,7 @@ getPerGameStats <- function(stats) {
 					sum(s$to),
 					sum(s$pts))
 
-	colnames(totals)<- c(	'fgm',
+	colnames(totals)<- c('fgm',
 						'fga',
 						'fg_pct',
 						'ftm',

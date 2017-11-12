@@ -1,4 +1,4 @@
-getSeasonData <- function(year) {
+getSeasonData <- function(year, game_ids_to_skip) {
 	year <- substring(year,3,4)
 
 	error_count <- 0
@@ -13,6 +13,7 @@ getSeasonData <- function(year) {
 		game_num <- rep("0", 5-nchar(i))
 		game_id <- c("002", year, game_num, i)
 		game_id <- paste(game_id,collapse='')
+		if(game_id %in% game_ids_to_skip) { next }
 		print(i)
 		tryCatch(
 		{

@@ -1,5 +1,5 @@
 library(openxlsx)
-source('team_names.R')
+source('R/team_names.R')
 
 # download xls files from basketball-reference.com
 # convert xlsx files to xlsx files

@@ -1,3 +1,6 @@
+library(openxlsx)
+source('team_names.R')
+
 # download xls files from basketball-reference.com
 # convert xlsx files to xlsx files
 # rename them with the following format "nba-MONTH.xlsx"

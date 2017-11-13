@@ -1,2 +1,4 @@
 *.sqlite
 *.rds
+*.xlsx
+*.csv

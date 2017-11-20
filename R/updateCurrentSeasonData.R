@@ -15,4 +15,6 @@ updateCurrentSeasonData <- function() {
 	saveRDS(rbind(new_data[[1]], player), 'data/raw/player.rds')
 	saveRDS(rbind(new_data[[2]], team), 'data/raw/team.rds')
 	saveRDS(rbind(new_data[[3]], starterBench), 'data/raw/starter-bench.rds')
+
+	dataClean()
 }

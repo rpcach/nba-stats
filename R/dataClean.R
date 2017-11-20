@@ -1,4 +1,8 @@
-clean <- function(p, t, sb) {
+dataClean <- function() {
+	p <- readRDS('data/raw/player.rds')
+	t <- readRDS('data/raw/team.rds')
+	sb <- readRDS('data/raw/starter-bench.rds')
+
 	sb <- sb[sb$GAME_ID != '0048300076', ]
 
 	names(p) <- tolower(names(p))
@@ -45,5 +49,20 @@ clean <- function(p, t, sb) {
 	# t$is_season <- sapply(t$game_id, function(x) substr(x,3,3))
 	# sb$is_season <- sapply(sb$game_id, function(x) substr(x,3,3))
 
-	return(list(p, t, sb))
+	p_season <- p[substr(p$game_id,1,1) == 2, ]
+	t_season <- t[substr(t$game_id,1,1) == 2, ]
+	sb_season <- sb[substr(sb$game_id,1,1) == 2, ]
+
+	saveRDS(p_season, 'data/season/player.rds')
+	saveRDS(t_season, 'data/season/team.rds')
+	saveRDS(sb_season, 'data/season/starter-bench.rds')
+
+	p_playoff <- p[substr(p$game_id,1,1) == 4, ]
+	t_playoff <- t[substr(t$game_id,1,1) == 4, ]
+	sb_playoff <- sb[substr(sb$game_id,1,1) == 4, ]
+
+	saveRDS(p_playoff, 'data/playoffs/player.rds')
+	saveRDS(t_playoff, 'data/playoffs/team.rds')
+	saveRDS(sb_playoff, 'data/playoffs/starter-bench.rds')
+
 }

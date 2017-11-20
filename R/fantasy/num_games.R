@@ -11,4 +11,3 @@ num_games <- function(player, p, schedule, start, end=as.Date(start)+6) {
 
 	return(nrow(schedule))
 }
-

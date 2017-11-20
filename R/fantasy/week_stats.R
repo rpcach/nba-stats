@@ -1,5 +1,5 @@
-week_stats <- function(roster, start, end=as.Date(start)+6) {
-	x <- roster
+week_stats <- function(stats, start, end=as.Date(start)+6) {
+	x <- stats
 	n <- x$games_played
 	m <- sapply(x$player_name, num_games, p, schedule, start)
 

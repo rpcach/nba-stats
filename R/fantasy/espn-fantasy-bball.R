@@ -12,4 +12,6 @@ roster_stats <- function(url, year=2017) {
 	roster <- gsub('[*]', '', roster)
 
 	stats <- get_stats(roster, year)
+
+	return(stats)
 }

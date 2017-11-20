@@ -1,6 +1,6 @@
-get_stats <- function(p, names, years='lifetime', mantissa=2, hide_null=TRUE) {
+get_stats <- function(p, name, years='lifetime', mantissa=2) {
 	if(years == 'lifetime') {
-		years <- unique(substr(p$game_id[p$player_name %in% names],2,3))
+		years <- unique(substr(p$game_id[p$player_name == name],2,3))
 
 		for(i in 1:length(years)) {
 			if(years[i] > 83) {
@@ -11,42 +11,39 @@ get_stats <- function(p, names, years='lifetime', mantissa=2, hide_null=TRUE) {
 		}
 		years <- sort(as.numeric(years))
 	}
-	p <- p[p$player_name %in% names & substr(p$game_id,2,3) %in% substr(years,3,4), ]
+	p <- p[p$player_name == name & substr(p$game_id,2,3) %in% substr(years,3,4), ]
 
 	stats <- matrix(0, ncol=19, nrow=0)
 
-	for(i in names) {
-		if(hide_null & !(i %in% p$player_name)) { next }
-		p2 <- p[p$player_name == i, ]
-		for(j in 1:length(years)) {
-			if(!hide_null & !(substr(years[j],3,4) %in% substr(p2$game_id,2,3))) { 
-				stats <- rbind(stats, c(i,years[j],0,0,0,NaN,0,0,NaN,0,0,NaN,0,0,0,0,0,0))
-				next
-			}
-			p3 <- p2[substr(p2$game_id,2,3) == substr(years[j],3,4), ]
-
-			stats <- rbind(stats, c(
-				i,
-				years[j],
-				nrow(p3),
-				mean(p3$time[p3$time != 0]),
-				sum(p3$fgm, na.rm=TRUE),
-				sum(p3$fga, na.rm=TRUE),
-				sum(p3$fgm, na.rm=TRUE) / sum(p3$fga, na.rm=TRUE),
-				sum(p3$fg3m, na.rm=TRUE),
-				sum(p3$fg3a, na.rm=TRUE),
-				sum(p3$fg3m, na.rm=TRUE) / sum(p3$fg3a, na.rm=TRUE),
-				sum(p3$ftm, na.rm=TRUE),
-				sum(p3$fta, na.rm=TRUE),
-				sum(p3$ftm, na.rm=TRUE) / sum(p3$fta, na.rm=TRUE),
-				mean(p3$reb, na.rm=TRUE),
-				mean(p3$ast, na.rm=TRUE),
-				mean(p3$stl, na.rm=TRUE),
-				mean(p3$blk, na.rm=TRUE),
-				mean(p3$to, na.rm=TRUE),
-				mean(p3$pts, na.rm=TRUE)))
+	for(j in 1:length(years)) {
+		if(!hide_null & !(substr(years[j],3,4) %in% substr(p$game_id,2,3))) { 
+			stats <- rbind(stats, c(i,years[j],0,0,0,NaN,0,0,NaN,0,0,NaN,0,0,0,0,0,0))
+			next
 		}
+		p2 <- p[substr(p$game_id,2,3) == substr(years[j],3,4), ]
+
+		stats <- rbind(stats, c(
+			name,
+			years[j],
+			nrow(p2),
+			mean(p2$time[p2$time != 0]),
+			sum(p2$fgm, na.rm=TRUE),
+			sum(p2$fga, na.rm=TRUE),
+			sum(p2$fgm, na.rm=TRUE) / sum(p2$fga, na.rm=TRUE),
+			sum(p2$fg3m, na.rm=TRUE),
+			sum(p2$fg3a, na.rm=TRUE),
+			sum(p2$fg3m, na.rm=TRUE) / sum(p2$fg3a, na.rm=TRUE),
+			sum(p2$ftm, na.rm=TRUE),
+			sum(p2$fta, na.rm=TRUE),
+			sum(p2$ftm, na.rm=TRUE) / sum(p2$fta, na.rm=TRUE),
+			mean(p2$reb, na.rm=TRUE),
+			mean(p2$ast, na.rm=TRUE),
+			mean(p2$stl, na.rm=TRUE),
+			mean(p2$blk, na.rm=TRUE),
+			mean(p2$to, na.rm=TRUE),
+			mean(p2$pts, na.rm=TRUE)))
 	}
+
 	stats <- as.data.frame(stats, stringsAsFactors=FALSE)
 	for(i in 2:ncol(stats)) { stats[, i] <- as.numeric(stats[, i]) }
 

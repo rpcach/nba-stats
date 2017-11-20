@@ -1,4 +1,4 @@
-get_team_names <- function() <- {
+get_team_names <- function() {
 	team_names <- matrix('',nrow=0,ncol=2)
 
 	team_names <- rbind(team_names, c('ATL', 'Atlanta Hawks'))

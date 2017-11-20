@@ -1,3 +1,4 @@
+library(jsonlite)
 getBoxscoreTraditional <- function(game_id) {
 	url <- paste('http://stats.nba.com/stats/boxscoretraditionalv2?GameID=', game_id, '&RangeType=0&StartPeriod=0&EndPeriod=0&StartRange=0&EndRange=0',sep='')
 	json <- readLines(url)

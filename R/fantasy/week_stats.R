@@ -21,5 +21,6 @@ week_stats <- function(stats, start, end=as.Date(start)+6) {
 	x$to <- m * x$to
 	x$pts <- m * x$pts
 
+	x <- x[, colnames(x) != 'season']
 	return(x)
 }

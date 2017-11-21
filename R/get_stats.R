@@ -19,10 +19,10 @@ get_stats <- function(names, years='lifetime', mantissa=2) {
 		p2 <- p[p$player_name == i, ]
 		
 		for(j in 1:length(years)) {
-			# if(!hide_null & !(substr(years[j],3,4) %in% substr(p$game_id,2,3))) { 
-			# 	stats <- rbind(stats, c(i,years[j],0,0,0,NaN,0,0,NaN,0,0,NaN,0,0,0,0,0,0))
-			# 	next
-			# }
+			if(!(substr(years[j],3,4) %in% substr(p$game_id,2,3))) { 
+				stats <- rbind(stats, c(i,years[j],0,0,0,NaN,0,0,NaN,0,0,NaN,0,0,0,0,0,0))
+				next
+			}
 			p3 <- p2[substr(p2$game_id,2,3) == substr(years[j],3,4), ]
 
 			stats <- rbind(stats, c(

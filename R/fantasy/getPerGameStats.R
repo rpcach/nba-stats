@@ -1,5 +1,5 @@
 getPerGameStats <- function(stats) {
-	s <- stats
+	s <- stats[stats$games_played > 0, ]
 	s$fgm <- s$fgm / s$games_played
 	s$fga <- s$fga / s$games_played
 

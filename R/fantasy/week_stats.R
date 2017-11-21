@@ -3,7 +3,9 @@ week_stats <- function(stats, start, end=as.Date(start)+6) {
 	n <- x$games_played
 	m <- sapply(x$player_name, num_games, p, schedule, start)
 
-	x$fgm <- m* x$fgm / n
+	x$games_played <- m
+
+	x$fgm <- m * x$fgm / n
 	x$fga <- m * x$fga / n
 
 	x$fg3m <- m * x$fg3m / n

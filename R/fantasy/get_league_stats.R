@@ -7,6 +7,7 @@ get_league_stats <- function(home_url) {
 		tryCatch({
 			url <- paste('http://games.espn.com/fba/clubhouse?leagueId=',info[2],'&teamId=',i,'&seasonId=',info[4],sep='')
 			temp <- roster_stats(url, team_name=TRUE)
+			temp <- temp[1:13, ]
 			temp <- data.frame(temp[1, 1], getPerGameStats(temp[, 2:ncol(temp)]), stringsAsFactors=FALSE)
 			colnames(temp)[1] <- 'team'
 
@@ -17,6 +18,7 @@ get_league_stats <- function(home_url) {
 			i <<- 0
 		})
 	}
+	#row.names(league) <- c('maga','yao','woll','mean','box','ven','chun','jz','nan','moha','yeun','math')
 
 	return(league)
 }

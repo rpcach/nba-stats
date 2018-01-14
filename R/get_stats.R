@@ -11,7 +11,7 @@ get_stats <- function(names, years='lifetime', mantissa=2) {
 		}
 	}
 	years <- sort(as.numeric(years))
-	p <- p[p$player_name %in% names & substr(p$game_id,2,3) %in% substr(years,3,4), ]
+	p <- p[p$player_name %in% names & p$year %in% as.numeric(substr(years,3,4)), ]
 
 	stats <- matrix(0, ncol=19, nrow=0)
 
@@ -19,11 +19,11 @@ get_stats <- function(names, years='lifetime', mantissa=2) {
 		p2 <- p[p$player_name == i, ]
 		
 		for(j in 1:length(years)) {
-			if(!(substr(years[j],3,4) %in% substr(p$game_id,2,3))) { 
-				stats <- rbind(stats, c(i,years[j],0,0,0,NaN,0,0,NaN,0,0,NaN,0,0,0,0,0,0))
+			if(!(substr(years[j],3,4) %in% p2$year)) { 
+				stats <- rbind(stats, c(i,years[j],0,0,0,0,NaN,0,0,NaN,0,0,NaN,0,0,0,0,0,0))
 				next
 			}
-			p3 <- p2[substr(p2$game_id,2,3) == substr(years[j],3,4), ]
+			p3 <- p2[p2$year == substr(years[j],3,4), ]
 
 			stats <- rbind(stats, c(
 				i,
@@ -51,7 +51,7 @@ get_stats <- function(names, years='lifetime', mantissa=2) {
 	stats <- as.data.frame(stats, stringsAsFactors=FALSE)
 	for(i in 2:ncol(stats)) { stats[, i] <- as.numeric(stats[, i]) }
 
-	colnames(stats) <- c(colnames(p)[6],'season','games_played',colnames(p)[c(8,11:25)])
+	colnames(stats) <- c(colnames(p)[8],'season','games_played',colnames(p)[c(10,13:27)])
 	stats[, 4:ncol(stats)] <- round(stats[ , 4:ncol(stats)], digits=mantissa)
 
 	return(stats)

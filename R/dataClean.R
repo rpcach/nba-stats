@@ -27,7 +27,6 @@ dataClean <- function() {
 		mins[mins == 'NA'] <- '00'
 		mins[nchar(mins) == 1] <- paste('0',mins[nchar(mins)==1],sep='')
 
-		#df <- cbind(df, time)
 		df <- cbind(df[, 1:9],0,0,df[, 10:ncol(df)])
 		colnames(df)[9:11] <- c('time','min','sec')
 
@@ -39,6 +38,12 @@ dataClean <- function() {
 		df$sec <- secs
 		df <- df[, c(-8,-21,-22,-28,-30)]
 
+		df <- cbind(substr(df[, 1], 1, 1), substr(df[, 1], 2, 3) , substr(df[, 1], 5, 8), df[, 2:ncol(df)], stringsAsFactors=FALSE)
+		colnames(df)[1:3] <- c('type','year','game_num')
+		df$type <- as.numeric(df$type)
+		df$year <- as.numeric(df$year)
+		df$game_num <- as.numeric(df$game_num)
+
 		p_t_sb[[i]] <- df
 	}
 	p <- p_t_sb[[1]]
@@ -49,17 +54,17 @@ dataClean <- function() {
 	# t$is_season <- sapply(t$game_id, function(x) substr(x,3,3))
 	# sb$is_season <- sapply(sb$game_id, function(x) substr(x,3,3))
 
-	p_season <- p[substr(p$game_id,1,1) == 2, ]
-	t_season <- t[substr(t$game_id,1,1) == 2, ]
-	sb_season <- sb[substr(sb$game_id,1,1) == 2, ]
+	p_season <- p[p$type == 2, ]
+	t_season <- t[t$type == 2, ]
+	sb_season <- sb[sb$type == 2, ]
 
 	saveRDS(p_season, 'data/season/player.rds')
 	saveRDS(t_season, 'data/season/team.rds')
 	saveRDS(sb_season, 'data/season/starter-bench.rds')
 
-	p_playoff <- p[substr(p$game_id,1,1) == 4, ]
-	t_playoff <- t[substr(t$game_id,1,1) == 4, ]
-	sb_playoff <- sb[substr(sb$game_id,1,1) == 4, ]
+	p_playoff <- p[p$type == 4, ]
+	t_playoff <- t[t$type == 4, ]
+	sb_playoff <- sb[sb$type == 4, ]
 
 	saveRDS(p_playoff, 'data/playoffs/player.rds')
 	saveRDS(t_playoff, 'data/playoffs/team.rds')

@@ -1,4 +1,4 @@
-get_league_stats <- function(home_url) {
+get_league_stats <- function(home_url, save=FALSE) {
 	info <- strsplit(home_url,'=|&')[[1]]
 
 	league <- NULL
@@ -19,6 +19,12 @@ get_league_stats <- function(home_url) {
 		})
 	}
 	#row.names(league) <- c('maga','yao','woll','mean','box','ven','chun','jz','nan','moha','yeun','math')
+	if(save) {
+		webpage <- home_url %>% read_html()
+		league_name <- as.character(webpage %>% html_nodes("title"))
+		league_name <- strsplit(league_name, '<title>| League Office')[[1]][2]
+		write.csv(league, paste(league_name,'.csv',sep=''), row.names=FALSE)
+	}
 
 	return(league)
 }

@@ -1,11 +1,13 @@
-library(jsonlite) #used in getBoxscoreTraditional
-library(rvest) #used in getBoxscoreTraditional - actually no?
-
 setwd('nba-stats')
-source('R/getBoxscoreTraditional.R')
 
-# loads season data
-player <- readRDS('data/season/player.rds')
+file.sources <- list.files('R', full.names=TRUE, recursive=TRUE)
+sapply(file.sources, source)
+
+#updateCurrentSeasonData()
+#dataClean()
+
+#loads season data
+player <- readRDS('data/season/player.rds'); p <- player
 team <- readRDS('data/season/team.rds')
 starterBench <- readRDS('data/season/starter-bench.rds')
 
@@ -14,14 +16,8 @@ player2 <- readRDS('data/playoffs/player.rds')
 team2 <- readRDS('data/playoffs/team.rds')
 starterBench2 <- readRDS('data/playoffs/starter-bench.rds')
 
-# 10-17-2017
-source('R/clean.R')
-cleaned <- clean(player, team, starterBench)
-p <- cleaned[[1]]
-t <- cleaned[[2]]
-sb <- cleaned[[3]]
 source('R/get_stats.R')
-get_stats(p, 'Carmelo Anthony', 2016)
+get_stats('Carmelo Anthony', 2017)
 
 #goals:
 #add in scraping of date for each game

@@ -7,7 +7,8 @@ get_league_stats <- function(home_url, save=FALSE) {
 		tryCatch({
 			url <- paste('http://games.espn.com/fba/clubhouse?leagueId=',info[2],'&teamId=',i,'&seasonId=',info[4],sep='')
 			temp <- roster_stats(url, team_name=TRUE)
-			temp <- temp[1:13, ]
+			num_players <- ifelse(nrow(temp) < 13, nrow(temp), 13)
+			temp <- temp[1:num_players, ]
 			temp <- data.frame(temp[1, 1], getPerGameStats(temp[, 2:ncol(temp)]), stringsAsFactors=FALSE)
 			colnames(temp)[1] <- 'team'
 

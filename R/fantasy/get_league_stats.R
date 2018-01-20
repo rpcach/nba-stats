@@ -1,4 +1,4 @@
-get_league_stats <- function(home_url, save=FALSE) {
+get_league_stats <- function(home_url, save=FALSE, shiny=FALSE) {
 	info <- strsplit(home_url,'=|&')[[1]]
 
 	league <- NULL
@@ -30,6 +30,9 @@ get_league_stats <- function(home_url, save=FALSE) {
 		library(XLConnect)
 		writeWorksheetToFile(file_name, league, "league", styleAction=XLC$STYLE_ACTION.NONE)
 
+		if(shiny) {
+			return(file_name)
+		}
 	}
 
 	return(league)

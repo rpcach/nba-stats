@@ -24,7 +24,12 @@ get_league_stats <- function(home_url, save=FALSE) {
 		webpage <- home_url %>% read_html()
 		league_name <- as.character(webpage %>% html_nodes("title"))
 		league_name <- strsplit(league_name, '<title>| League Office')[[1]][2]
-		write.csv(league, paste(league_name,'.csv',sep=''), row.names=FALSE)
+		
+		file_name <- paste(league_name,' ',gsub(':','-',Sys.time()),'.xlsx',sep='')
+		file.copy('league_template.xlsx',file_name)
+		library(XLConnect)
+		writeWorksheetToFile(file_name, league, "league", styleAction=XLC$STYLE_ACTION.NONE)
+
 	}
 
 	return(league)

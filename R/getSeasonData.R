@@ -21,6 +21,7 @@ getSeasonData <- function(year, game_ids_to_skip) {
 			player <- rbind(player, stats$player)
 			team <- rbind(team, stats$team)
 			starterBench <- rbind(starterBench, stats$starterBench)
+			Sys.sleep(1)
 		},
 		error=function(e) {
 			Sys.sleep(1)

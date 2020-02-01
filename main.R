@@ -7,7 +7,7 @@ sapply(file.sources, source)
 #dataClean()
 
 #loads season data
-player <- readRDS('data/season/player.rds'); p <- player
+player <- readRDS('data/season/player.rds')#; p <- player
 team <- readRDS('data/season/team.rds')
 starterBench <- readRDS('data/season/starter-bench.rds')
 
